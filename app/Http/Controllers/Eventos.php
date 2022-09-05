@@ -26,20 +26,26 @@ class Eventos extends Controller
         );
     }
 
+    public function renderPatients(){
+        $pacientes = Pacientes::all();
+
+        return $pacientes;
+    }
+
     public function salvar(Request $r){
         //return redirect('/painel/pacientes/novo');
         
         $event = new Pacientes;
-        $cpf = str_replace(".","",str_replace("-","",$r->cpf));
+        $cpf = $r->cpf;
 
         $event->nome = $r->nome;
         $event->cpf = $cpf;
-        $event->wpp = str_replace(")","",str_replace("(","",str_replace("-","",$r->wpp)));
+        $event->wpp = $r->wpp;
         $event->nasc = $r->nasc;
         $event->estado = 3;
         
         if($r->hasFile("foto") && $r->file("foto")->isValid()){
-            $permitidas = ["jpg","png"];
+            $permitidas = ["jpg","png","jtif"];
             $foto = $r->foto;
             $extensao = $foto->extension();
             if(in_array($extensao,$permitidas)){
@@ -59,8 +65,8 @@ class Eventos extends Controller
     public function editar(Request $r){
         $event = new Pacientes;
 
-        $cpf = str_replace(".","",str_replace("-","",$r->cpf));
-        $wpp = str_replace(")","",str_replace("(","",str_replace("-","",$r->wpp)));
+        $cpf = $r->cpf;
+        $wpp = $r->wpp;
 
         $id = $r->id;
         $event->nome = $r->nome;
@@ -69,7 +75,7 @@ class Eventos extends Controller
         $event->nasc = $r->nasc;
 
         if($r->hasFile("foto") && $r->file("foto")->isValid()){
-            $permitidas = ["jpg","jpeg","png"];
+            $permitidas = ["jpg","jpeg","png","jtif"];
             $foto = $r->foto;
             $extensao = $foto->extension();
             if(in_array($extensao,$permitidas)){

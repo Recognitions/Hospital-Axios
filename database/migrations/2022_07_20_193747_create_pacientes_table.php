@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('nome',255);
             $table->date('nasc');
-            $table->string('cpf',11);
-            $table->string('wpp',11);
+            $table->string('cpf',20);
+            $table->string('wpp',20);
             $table->string('foto',17)->default('none.jpg');
             $table->tinyinteger('estado')->default(3);
             $table->text('_token')->nullable(true);

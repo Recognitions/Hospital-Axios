@@ -4,6 +4,52 @@ $(document).ready(()=>{
         baseURL: "http://127.0.0.1:8000"
     })
 
+    async function renderPatients(){
+        const table = document.querySelector("tbody")
+        table.innerHTML=""
+        const patients = await api.get('/pacientes')
+        console.log(patients.data)
+        patients.data.forEach((patient)=>{
+            const tr = document.createElement("tr")
+            const idade = 0
+
+            const resultados = [
+                "❗Possível Infectado",
+                "⚠️Potencial Infectado",
+                "✅Sintomas Insuficientes",
+                "Não Atendido"
+            ];
+            const corRR = ["red","orange","green","grey"];
+
+            tr.innerHTML=`
+                <th><a href="/img/pacientes/${patient.foto}"><img style="background-image:url(/img/pacientes/${patient.foto})" class="imagemPaciente"></a></th>
+                <th id="nome${patient.id}" value="${patient.id}">${patient.nome}</th>
+                <th id="idade${patient.id}" value="{{$paciente->nasc}}">${idade}</th>
+                <th id="cpf${patient.id}">${patient.cpf}</th>
+                <th id="wpp${patient.id}">${patient.wpp}</th>
+                <th style="text-align:center;color:${corRR[patient.estado]}">${resultados[patient.estado]}</th>
+                <th>
+                    <a href="/painel/pacientes/atender/${patient.id}"><button type="submit" class="btn btn-success w-100" name="atender">Atender</button></a>
+                    <a id="edit${patient.id}"><button id="E${patient.id}" type="submit" class="btn btn-warning w-100" name="atender">Editar</button></a>
+                    <a><button id="R${patient.id}" type="submit" class="btn btn-danger w-100" name="atender">Remover</button></a>
+                </th>
+            `
+            table.appendChild(tr)
+
+            document.querySelector(`#E${patient.id}`).addEventListener("click",()=>{
+
+            })
+            document.querySelector(`#R${patient.id}`).addEventListener("click",async()=>{
+                if(confirm("Deseja remover esse paciente?")==true){
+                    const patients = await api.get(`/painel/pacientes/remover/${patient.id}`)
+                    renderPatients()
+                }
+            })
+        })
+
+    }
+    renderPatients()
+
     $("#atenderPaciente").submit(async(e)=>{
         e.preventDefault()
         const url = (window.location.href).split("/")
@@ -240,27 +286,10 @@ $(document).ready(()=>{
         const patient = savePatient.data
         console.log(patient)
 
-        newAno = (patient[0].nasc)
-        newIdade = 2022-newAno.substring(4,0)
-
-        let novo = `<tr>
-            <th><a href="/img/pacientes/${patient[0].foto}"><img style="background-image:url(/img/pacientes/${patient[0].foto})" class="imagemPaciente"></a></th>
-            <th id="nome${qtd}" value="${patient[0].id}">${patient[0].nome}</th>
-            <th id="idade${qtd}" value="${patient[0].nac}">${newIdade}</th>
-            <th id="cpf${qtd}">${$("#inputCPF").val()}</th>
-            <th id="wpp${qtd}">${$("#inputWPP").val()}</th>
-            <th style="text-align:center;">${resultados[patient[0].estado]}</th>
-            <th>
-                <a href="/painel/pacientes/atender/${patient[0].id}"><button type="submit" class="btn btn-success w-100" name="atender">Atender</button></a>
-                <a id="edit${qtd}"><button id="${patient[0].id}" type="submit" class="btn btn-warning w-100" name="atender">Editar</button></a>
-                <a href="/painel/pacientes/remover/${patient[0].id}"><button type="submit" class="btn btn-danger w-100" name="atender">Remover</button></a>
-            </th>
-        </tr>`
-        $("#tabela").append(novo)
-        $('#salvarPaciente input').val("")
-        $('#salvarPaciente input[type = submit]').val("Enviar")
+        renderPatients()
         salvarDados()
         editarRegistros()
+        
     }) 
 
 });
