@@ -248,53 +248,32 @@ $(document).ready(()=>{
 
     $("#salvarPaciente").submit(async(e)=>{
         e.preventDefault()
-        const patient = new FormData(document.getElementById("salvarPaciente"))
-        const savePatient = api.post('/painel/pacientes', patient)
+        const formPatient = new FormData(document.getElementById("salvarPaciente"))
+        const savePatient = await api.post('/painel/pacientes', formPatient)
+        const patient = savePatient.data
+        console.log(patient)
+
+        newAno = (patient[0].nasc)
+        newIdade = 2022-newAno.substring(4,0)
+
+        let novo = `<tr>
+            <th><a href="/img/pacientes/${patient[0].foto}"><img style="background-image:url(/img/pacientes/${patient[0].foto})" class="imagemPaciente"></a></th>
+            <th id="nome${qtd}" value="${patient[0].id}">${patient[0].nome}</th>
+            <th id="idade${qtd}" value="${patient[0].nac}">${newIdade}</th>
+            <th id="cpf${qtd}">${$("#inputCPF").val()}</th>
+            <th id="wpp${qtd}">${$("#inputWPP").val()}</th>
+            <th style="text-align:center;">${resultados[patient[0].estado]}</th>
+            <th>
+                <a href="/painel/pacientes/atender/${patient[0].id}"><button type="submit" class="btn btn-success w-100" name="atender">Atender</button></a>
+                <a id="edit${qtd}"><button id="${patient[0].id}" type="submit" class="btn btn-warning w-100" name="atender">Editar</button></a>
+                <a href="/painel/pacientes/remover/${patient[0].id}"><button type="submit" class="btn btn-danger w-100" name="atender">Remover</button></a>
+            </th>
+        </tr>`
+        $("#tabela").append(novo)
+        $('#salvarPaciente input').val("")
+        $('#salvarPaciente input[type = submit]').val("Enviar")
+        salvarDados()
+        editarRegistros()
     }) 
-    /*
-    $("#salvarPaciente").submit((e)=>{
-        e.preventDefault()
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        var formData = new FormData(document.getElementById("salvarPaciente"))
-        $.ajax({
-            url: "pacientes",
-            contentType: false,
-            cache: false,
-            processData: false,
-            dataType: 'json',
-            type: "POST",
-            data: formData,
-            success: (select)=>{
-                newAno = (select[0].nasc)
-                newIdade = 2022-newAno.substring(4,0)
-
-                let novo = `<tr>
-                    <th><a href="/img/pacientes/${select[0].foto}"><img style="background-image:url(/img/pacientes/${select[0].foto})" class="imagemPaciente"></a></th>
-                    <th id="nome${qtd}" value="${select[0].id}">${select[0].nome}</th>
-                    <th id="idade${qtd}" value="${select[0].nac}">${newIdade}</th>
-                    <th id="cpf${qtd}">${$("#inputCPF").val()}</th>
-                    <th id="wpp${qtd}">${$("#inputWPP").val()}</th>
-                    <th style="text-align:center;">${resultados[select[0].estado]}</th>
-                    <th>
-                        <a href="/painel/pacientes/atender/${select[0].id}"><button type="submit" class="btn btn-success w-100" name="atender">Atender</button></a>
-                        <a id="edit${qtd}"><button id="${select[0].id}" type="submit" class="btn btn-warning w-100" name="atender">Editar</button></a>
-                        <a href="/painel/pacientes/remover/${select[0].id}"><button type="submit" class="btn btn-danger w-100" name="atender">Remover</button></a>
-                    </th>
-                </tr>`
-                $("#tabela").append(novo)
-                $('#salvarPaciente input').val("")
-                $('#salvarPaciente input[type = submit]').val("Enviar")
-                salvarDados()
-                editarRegistros()
-            }
-        })
-
-        return false;
-    })
-    */
 
 });
