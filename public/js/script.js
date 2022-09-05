@@ -77,29 +77,6 @@ $(document).ready(()=>{
 
     
 
-    document.querySelector("#atenderPaciente").addEventListener("submit",async(e)=>{
-        e.preventDefault()
-        const url = (window.location.href).split("/")
-        const formAtten = new FormData(document.getElementById("atenderPaciente"))
-        const atten = await api.post(`/painel/pacientes/atender/${url[6]}`,formAtten)
-
-        br = $("#boxResultado")
-        successa = $("<div/>",{
-            class: "alert alert-success alert-dismissible fade show",
-            role: "alert",
-            id: "meuAlertae",
-            text: "Paciente Atendido!",
-            style:"margin-top:10px"
-        }).appendTo(br)
-        $("<button/>",{
-            class:"btn-close",
-            data:"alert",
-            id:"btndoalerta"
-        }).appendTo(successa)
-        $("#meuAlertae button").click(()=>{successa.hide()})
-        
-    })
-
     //Data maxima no input date
     if(document.getElementById("inputDate")){
         inputDate = document.getElementById("inputDate")
@@ -254,11 +231,34 @@ $(document).ready(()=>{
         document.getElementById("nome").value = document.getElementById("inputCPF").value = document.getElementById("inputWPP").value = document.getElementById("inputDate").value = document.getElementById("formFile").value = ""
     }) 
 
-    document.querySelector("#editArea form").addEventListener("submit",async(e)=>{
+    $("#editArea form").submit(async(e)=>{
         e.preventDefault()
         const formEdit = new FormData(document.querySelector("#editArea form"))
         const editPatient = await api.post("/painel/pacientes/editar",formEdit)
         renderPatients()
+    })
+
+    $("#atenderPaciente").submit(async(e)=>{
+        e.preventDefault()
+        const url = (window.location.href).split("/")
+        const formAtten = new FormData(document.getElementById("atenderPaciente"))
+        const atten = await api.post(`/painel/pacientes/atender/${url[6]}`,formAtten)
+
+        br = $("#boxResultado")
+        successa = $("<div/>",{
+            class: "alert alert-success alert-dismissible fade show",
+            role: "alert",
+            id: "meuAlertae",
+            text: "Paciente Atendido!",
+            style:"margin-top:10px"
+        }).appendTo(br)
+        $("<button/>",{
+            class:"btn-close",
+            data:"alert",
+            id:"btndoalerta"
+        }).appendTo(successa)
+        $("#meuAlertae button").click(()=>{successa.hide()})
+        
     })
 
 });
