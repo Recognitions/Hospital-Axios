@@ -1,8 +1,8 @@
 <div align="center">
-    <b>Cadastro | Pacientes</b>
+    <h2>Cadastro | Pacientes</h2>
     <img src="public/img/show/img2.png">
-    <b>Editar</b>
+    <h2>Editar</h2>
     <img src="public/img/show/img3.png">
-    <b>Consultar</b>
+    <h2>Consultar</h2>
     <img src="public/img/show/img1.png">
 </div>
