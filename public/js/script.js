@@ -75,14 +75,9 @@ $(document).ready(()=>{
     }
     renderPatients()
 
-    document.querySelector("#editArea form").addEventListener("submit",async(e)=>{
-        e.preventDefault()
-        const formEdit = new FormData(document.querySelector("#editArea form"))
-        const editPatient = await api.post("/painel/pacientes/editar",formEdit)
-        renderPatients()
-    })
+    
 
-    $("#atenderPaciente").submit(async(e)=>{
+    document.querySelector("#atenderPaciente").addEventListener("submit",async(e)=>{
         e.preventDefault()
         const url = (window.location.href).split("/")
         const formAtten = new FormData(document.getElementById("atenderPaciente"))
@@ -258,5 +253,12 @@ $(document).ready(()=>{
         renderPatients()
         document.getElementById("nome").value = document.getElementById("inputCPF").value = document.getElementById("inputWPP").value = document.getElementById("inputDate").value = document.getElementById("formFile").value = ""
     }) 
+
+    document.querySelector("#editArea form").addEventListener("submit",async(e)=>{
+        e.preventDefault()
+        const formEdit = new FormData(document.querySelector("#editArea form"))
+        const editPatient = await api.post("/painel/pacientes/editar",formEdit)
+        renderPatients()
+    })
 
 });
