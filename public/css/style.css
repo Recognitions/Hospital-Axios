@@ -1,0 +1,46 @@
+*{
+    font-family: Arial;
+}
+.pacientes{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top:5px;
+    padding: 30px;
+    height: 500px;
+}.pacientes form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 100%;
+    margin-right: 30px;
+}.pacientes form div:first-child{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}.imagemPaciente{
+    width: 80px;
+    height: 80px;
+    border: 0px solid black;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.editArea{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top:0px;
+    left:0px;
+    background-color: rgba(0,0,0,0.5);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    display:none
+}
