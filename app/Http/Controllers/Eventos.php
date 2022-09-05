@@ -45,11 +45,11 @@ class Eventos extends Controller
         $event->estado = 3;
         
         if($r->hasFile("foto") && $r->file("foto")->isValid()){
-            $permitidas = ["jpg","png","jtif"];
+            $permitidas = ["jpg","png","jfif"];
             $foto = $r->foto;
             $extensao = $foto->extension();
             if(in_array($extensao,$permitidas)){
-                $nomeFoto = $cpf.".$extensao";
+                $nomeFoto = uniqid().".$extensao";
                 $foto->move(public_path("img/pacientes"),$nomeFoto);
                 $event->foto = $nomeFoto;
             }else{
@@ -79,7 +79,7 @@ class Eventos extends Controller
             $foto = $r->foto;
             $extensao = $foto->extension();
             if(in_array($extensao,$permitidas)){
-                $nomeFoto = $cpf.".$extensao";
+                $nomeFoto = uniqid().".$extensao";
                 $foto->move(public_path("img/pacientes"),$nomeFoto);
             }else{
                 return redirect('/painel/pacientes')->with('alert2','Formato de Imagem Não Permitido!');
