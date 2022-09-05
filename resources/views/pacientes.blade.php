@@ -106,7 +106,7 @@
         </div>
     </div>
     <div id="editArea" class="editArea">
-        <form action="/painel/pacientes/editar" class="row g-3" method="get" enctype="multipart/form-data">
+        <form action="/painel/pacientes/editar" class="row g-3" method="post" enctype="multipart/form-data">
             @csrf
             <div class="modal-dialog" role="document">
                 <div class="modal-content rounded-4 shadow">

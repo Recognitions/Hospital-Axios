@@ -16,7 +16,7 @@ Route::get('/painel', function(){
 Route::get('/painel/pacientes', [Eventos::class, 'pacientes']);
 Route::get('pacientes',[Eventos::class, 'renderPatients']);
 Route::post('/painel/pacientes', [Eventos::class, 'salvar'])->name('pacientes.salvar');
-Route::get('/painel/pacientes/editar', [Eventos::class, 'editar'])->name('pacientes.editar');
+Route::post('/painel/pacientes/editar', [Eventos::class, 'editar'])->name('pacientes.editar');
 
 Route::get('/painel/tabela', [Eventos::class, 'tabela']);
 

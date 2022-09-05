@@ -86,7 +86,7 @@ class Eventos extends Controller
             }
         }else{$nomeFoto="none.jpg";}
         
-        $event->where('id',$id)->update([
+        $select = $event->where('id',$id)->update([
             "nome"=>$r->nome,
             "cpf"=>$cpf,
             "wpp"=>$wpp,
@@ -95,7 +95,7 @@ class Eventos extends Controller
         ]);
 
         //return response()->json(['Paciente Editado']);
-        return redirect("/painel/pacientes")->with('alert5','Paciente Editado!');
+        return response()->json($select);
     }
 
     public function atender($id){

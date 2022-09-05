@@ -8,10 +8,25 @@ $(document).ready(()=>{
         const table = document.querySelector("tbody")
         table.innerHTML=""
         const patients = await api.get('/pacientes')
-        console.log(patients.data)
         patients.data.forEach((patient)=>{
             const tr = document.createElement("tr")
-            const idade = 0
+
+            const ano = parseInt(patient.nasc.slice(0,4));
+            const mes = parseInt(patient.nasc.slice(5,2));
+            const dia = parseInt(patient.nasc.slice(8));
+
+            const data = new Date()
+            const anoAtual = data.getFullYear();
+            const mesAtual = data.getMonth()+1;
+            const diaAtual = data.getDate();
+
+            const idade = anoAtual-ano;
+
+            if(mesAtual<mes){
+                idade -= 1;
+            }else if((mesAtual == mes) && (diaAtual <= dia)){
+                idade -= 1;
+            }
 
             const resultados = [
                 "❗Possível Infectado",
@@ -37,7 +52,17 @@ $(document).ready(()=>{
             table.appendChild(tr)
 
             document.querySelector(`#E${patient.id}`).addEventListener("click",()=>{
-
+                const editArea = document.querySelector("#editArea")
+                editArea.style.display="flex"
+                document.querySelector("#editarID").value=patient.id
+                document.querySelector("#editarNome").value=patient.nome
+                document.querySelector("#editarIdade").value=patient.nasc
+                document.querySelector("#editarCPF").value=patient.cpf
+                document.querySelector("#editarWPP").value=patient.wpp
+            })
+            document.querySelector("#closeEditArea").addEventListener("click",()=>{
+                const editArea = document.querySelector("#editArea")
+                editArea.style.display="none"
             })
             document.querySelector(`#R${patient.id}`).addEventListener("click",async()=>{
                 if(confirm("Deseja remover esse paciente?")==true){
@@ -49,6 +74,13 @@ $(document).ready(()=>{
 
     }
     renderPatients()
+
+    document.querySelector("#editArea form").addEventListener("submit",async(e)=>{
+        e.preventDefault()
+        const formEdit = new FormData(document.querySelector("#editArea form"))
+        const editPatient = await api.post("/painel/pacientes/editar",formEdit)
+        renderPatients()
+    })
 
     $("#atenderPaciente").submit(async(e)=>{
         e.preventDefault()
@@ -72,66 +104,6 @@ $(document).ready(()=>{
         $("#meuAlertae button").click(()=>{successa.hide()})
         
     })
-
-
-    //editar registros
-    function editarRegistros(){
-        let qtd = document.querySelectorAll("#tabela tr").length
-        editArea = $("#editArea")
-        closeEditArea = $("#closeEditArea")
-        for (let ed = 0; ed < qtd; ed++) {
-            let editBtn = $("#edit"+ed)
-            let sId = $("#edit"+ed+" button").attr("id")
-            editBtn.click(()=>{
-                editArea.attr("style","display:flex")
-                $("#editarID").val($("#nome"+ed).attr("value"))
-                $("#editarNome").val($("#nome"+ed).html())
-                $("#editarIdade").val($("#idade"+ed).attr("value"))
-                $("#editarCPF").val($("#cpf"+ed).html())
-                $("#editarWPP").val($("#wpp"+ed).html())
-                
-                closeEditArea.click(()=>{
-                    editArea.attr("style","display:none")
-                })
-            })
-        }
-    }
-
-    //Salvar os dados num array
-    tabela = document.getElementById("tabela")
-    let qtd = document.querySelectorAll("#tabela tr").length
-    array = []
-    function criarDados(){
-        let qtd = document.querySelectorAll("#tabela tr").length
-        for(let i=0;i<qtd;i++){
-            item = tabela.children[i].innerHTML
-            array.push(item)
-        }
-    }
-    criarDados()
-    function salvarDados(){
-        let qtd = document.querySelectorAll("#tabela tr").length
-        item = tabela.children[qtd-1].innerHTML
-        array.push(item)
-    }
-    //Pesquisar pessoas por meio dos dados inseridos no campo de pesquisa
-    pesquisar = document.getElementById("pesquisar")
-    $(pesquisar).keyup(()=>{
-        tabela.innerHTML=""
-        pValue = $(pesquisar).val()
-        if(pValue!=""){
-            array.forEach(element => {
-                if(element.includes(pValue)){
-                    tabela.innerHTML+=element
-                }
-            });
-        }else{
-            array.forEach(element => {
-                tabela.innerHTML+=element
-            });
-        }
-        editarRegistros()
-    });
 
     //Data maxima no input date
     if(document.getElementById("inputDate")){
@@ -277,19 +249,14 @@ $(document).ready(()=>{
         })
     });
 
-    editarRegistros()
-
     $("#salvarPaciente").submit(async(e)=>{
         e.preventDefault()
         const formPatient = new FormData(document.getElementById("salvarPaciente"))
         const savePatient = await api.post('/painel/pacientes', formPatient)
         const patient = savePatient.data
-        console.log(patient)
 
         renderPatients()
-        salvarDados()
-        editarRegistros()
-        
+        document.getElementById("nome").value = document.getElementById("inputCPF").value = document.getElementById("inputWPP").value = document.getElementById("inputDate").value = document.getElementById("formFile").value = ""
     }) 
 
 });
