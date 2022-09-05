@@ -223,11 +223,8 @@ $(document).ready(()=>{
 
     $("#salvarPaciente").submit(async(e)=>{
         e.preventDefault()
-        const savePatient = await api.post('/painel/pacientes', formPatient,{
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
+        const formPatient = new FormData(document.getElementById("salvarPaciente"))
+        const savePatient = await api.post('/painel/pacientes', formPatient)
         const patient = savePatient.data
 
         renderPatients()

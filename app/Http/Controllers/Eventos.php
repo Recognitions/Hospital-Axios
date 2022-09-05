@@ -75,7 +75,7 @@ class Eventos extends Controller
         $event->nasc = $r->nasc;
 
         if($r->hasFile("foto") && $r->file("foto")->isValid()){
-            $permitidas = ["jpg","jpeg","png","jtif"];
+            $permitidas = ["jpg","jpeg","png","jfif"];
             $foto = $r->foto;
             $extensao = $foto->extension();
             if(in_array($extensao,$permitidas)){
