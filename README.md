@@ -4,5 +4,5 @@
     <b>Editar</b>
     <img src="public/img/show/img3.png">
     <b>Consultar</b>
-<img src="public/img/show/img1.png">
+    <img src="public/img/show/img1.png">
 </div>
