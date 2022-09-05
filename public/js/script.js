@@ -1,39 +1,30 @@
 $(document).ready(()=>{
 
-    $("#atenderPaciente").submit((e)=>{
+    const api = axios.create({
+        baseURL: "http://127.0.0.1:8000"
+    })
+
+    $("#atenderPaciente").submit(async(e)=>{
         e.preventDefault()
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        var formData2 = new FormData(document.getElementById("atenderPaciente"))
-        $.ajax({
-            url: "atender",
-            contentType: false,
-            cache: false,
-            processData: false,
-            dataType: 'json',
-            type: "POST",
-            data: formData2,
-            success:(msg)=>{
-                br = $("#boxResultado")
-                successa = $("<div/>",{
-                    class: "alert alert-success alert-dismissible fade show",
-                    role: "alert",
-                    id: "meuAlertae",
-                    text: "Paciente Atendido!",
-                    style:"margin-top:10px"
-                }).appendTo(br)
-                $("<button/>",{
-                    class:"btn-close",
-                    data:"alert",
-                    id:"btndoalerta"
-                }).appendTo(successa)
-                $("#meuAlertae button").click(()=>{successa.hide()})
-            }
-        })
-        return false;
+        const url = (window.location.href).split("/")
+        const formAtten = new FormData(document.getElementById("atenderPaciente"))
+        const atten = await api.post(`/painel/pacientes/atender/${url[6]}`,formAtten)
+
+        br = $("#boxResultado")
+        successa = $("<div/>",{
+            class: "alert alert-success alert-dismissible fade show",
+            role: "alert",
+            id: "meuAlertae",
+            text: "Paciente Atendido!",
+            style:"margin-top:10px"
+        }).appendTo(br)
+        $("<button/>",{
+            class:"btn-close",
+            data:"alert",
+            id:"btndoalerta"
+        }).appendTo(successa)
+        $("#meuAlertae button").click(()=>{successa.hide()})
+        
     })
 
 
@@ -241,10 +232,6 @@ $(document).ready(()=>{
     });
 
     editarRegistros()
-
-    const api = axios.create({
-        baseURL: "http://127.0.0.1:8000"
-    })
 
     $("#salvarPaciente").submit(async(e)=>{
         e.preventDefault()
