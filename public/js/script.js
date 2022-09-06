@@ -6,8 +6,8 @@ $(document).ready(()=>{
 
     async function renderPatients(){
         const table = document.querySelector("tbody")
-        table.innerHTML=""
         const patients = await api.get('/pacientes')
+        table.innerHTML=""
         patients.data.forEach((patient)=>{
             const tr = document.createElement("tr")
 
