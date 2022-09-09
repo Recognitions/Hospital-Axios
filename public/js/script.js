@@ -121,7 +121,7 @@ $(document).ready(()=>{
         }else{
             alert("CPF INVÁLIDO!")
         }
-    }) 
+    })
 
     $("#editArea form").submit(async(e)=>{
         e.preventDefault()
