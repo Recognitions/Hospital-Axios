@@ -123,7 +123,6 @@ $(document).ready(()=>{
             const url = (window.location.href).split("/")
             const formAtten = new FormData(document.getElementById("atenderPaciente"))
             const atten = await api.post(`/painel/pacientes/atender/${url[6]}`,formAtten)
-
             const br = $("#boxResultado")
             const successa = $("<div/>",{
                 class: "alert alert-success alert-dismissible fade show",
