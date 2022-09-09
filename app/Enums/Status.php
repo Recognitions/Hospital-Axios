@@ -15,7 +15,7 @@ enum Status: int
         {
             Status::PossibleInfected => [
                 'color' => 'sucess',
-                'name' => 'POSSÍVEL INFECTADO',
+                'name' => 'POSSÍVEL INFECTADO'
             ],
             Status::InfectedPotential => [
                 'color' => 'warning',
