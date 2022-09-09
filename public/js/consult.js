@@ -1,4 +1,4 @@
-export function diagnosis(){
+export function consult(){
     const listaSintomas = [
         "Febre",
         "Coriza",
@@ -24,6 +24,7 @@ export function diagnosis(){
     let somaSintomas = 0
     let sintomasPaciente = []
     let divSintomas = $("#sintomas")
+    let rr
     listaSintomas.forEach(element => {
         let formCheck = $('<div/>',{
             class: 'form-check'
@@ -53,7 +54,7 @@ export function diagnosis(){
             }else if(somaSintomas<6){
                 rr = 2
             }
-            resultadoFinal = resultados[rr]
+            let resultadoFinal = resultados[rr]
             $("#resultadoSintomas").html("Resultado: "+resultadoFinal)
             $("#areaSintomas").html(sintomasPaciente+",")
             $("#sintNum").val(somaSintomas)

@@ -1,6 +1,6 @@
 import { format } from './format.js'
 import { CPF } from './validate.js'
-import { diagnosis } from './diagnosis.js'
+import { consult } from './consult.js'
 
 $(document).ready(()=>{
 
@@ -77,10 +77,12 @@ $(document).ready(()=>{
         })
 
     }
-    renderPatients()
+    
 
     //Data maxima no input date
     if(document.getElementById("inputDate")){
+        renderPatients()
+        format()
         const inputDate = document.getElementById("inputDate")
         inputDate.min="1900-01-01"
         const date = new Date();
@@ -92,8 +94,8 @@ $(document).ready(()=>{
         }
         inputDate.max=(date.getFullYear()-1)+"-"+mes+"-"+date.getDate();
     }
-    
-    format()
+
+    consult()
 
     //Alertas
     setTimeout(()=>{ //Fecha automaticamente após 5 segundos
@@ -104,7 +106,7 @@ $(document).ready(()=>{
     })
 
 
-    diagnosis()
+    
 
     $("#salvarPaciente").submit(async(e)=>{
         e.preventDefault()
@@ -123,32 +125,40 @@ $(document).ready(()=>{
 
     $("#editArea form").submit(async(e)=>{
         e.preventDefault()
-        const formEdit = new FormData(document.querySelector("#editArea form"))
-        const editPatient = await api.post("/painel/pacientes/editar",formEdit)
-        renderPatients()
+        if(CPF(document.getElementById("editarCPF").value)==true){
+            if(confirm("Confirmar edições?")==true){
+                const formEdit = new FormData(document.querySelector("#editArea form"))
+                const editPatient = await api.post("/painel/pacientes/editar",formEdit)
+                renderPatients()
+                alert("Editado com sucesso!")
+            }
+        }else{
+            alert("CPF INVÁLIDO!")
+        }
     })
-
+    
     $("#atenderPaciente").submit(async(e)=>{
         e.preventDefault()
-        const url = (window.location.href).split("/")
-        const formAtten = new FormData(document.getElementById("atenderPaciente"))
-        const atten = await api.post(`/painel/pacientes/atender/${url[6]}`,formAtten)
+        if(confirm("Realizar atendimento?")==true){
+            const url = (window.location.href).split("/")
+            const formAtten = new FormData(document.getElementById("atenderPaciente"))
+            const atten = await api.post(`/painel/pacientes/atender/${url[6]}`,formAtten)
 
-        br = $("#boxResultado")
-        successa = $("<div/>",{
-            class: "alert alert-success alert-dismissible fade show",
-            role: "alert",
-            id: "meuAlertae",
-            text: "Paciente Atendido!",
-            style:"margin-top:10px"
-        }).appendTo(br)
-        $("<button/>",{
-            class:"btn-close",
-            data:"alert",
-            id:"btndoalerta"
-        }).appendTo(successa)
-        $("#meuAlertae button").click(()=>{successa.hide()})
-        
+            const br = $("#boxResultado")
+            const successa = $("<div/>",{
+                class: "alert alert-success alert-dismissible fade show",
+                role: "alert",
+                id: "meuAlertae",
+                text: "Paciente Atendido!",
+                style:"margin-top:10px"
+            }).appendTo(br)
+            $("<button/>",{
+                class:"btn-close",
+                data:"alert",
+                id:"btndoalerta"
+            }).appendTo(successa)
+            $("#meuAlertae button").click(()=>{successa.hide()})
+        }
     })
 
 });
