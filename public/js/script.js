@@ -1,3 +1,7 @@
+import { format } from './format.js'
+import { CPF } from './validate.js'
+import { diagnosis } from './diagnosis.js'
+
 $(document).ready(()=>{
 
     const api = axios.create({
@@ -75,13 +79,12 @@ $(document).ready(()=>{
     }
     renderPatients()
 
-    
-
     //Data maxima no input date
     if(document.getElementById("inputDate")){
-        inputDate = document.getElementById("inputDate")
+        const inputDate = document.getElementById("inputDate")
         inputDate.min="1900-01-01"
         const date = new Date();
+        let mes
         if((date.getMonth()+1)>10){
             mes = date.getMonth()+1
         }else{
@@ -89,65 +92,8 @@ $(document).ready(()=>{
         }
         inputDate.max=(date.getFullYear()-1)+"-"+mes+"-"+date.getDate();
     }
-    //Formatar o CPF no Input
-    $("#inputCPF").keydown((k)=>{
-        key = window.event.keyCode
-        if(key==8){document.querySelector("#inputCPF").value=""}
-        $("#inputCPF").attr("maxlength", "14")
-        icval = $("#inputCPF").val()
-        var v = icval
-        if(v.length == 3 || v.length == 7){
-            document.querySelector("#inputCPF").value += "."
-        }else if(v.length == 11){
-            document.querySelector("#inputCPF").value += "-"
-        }
-    })
-    //Formatar o WPP no Input
-    $("#inputWPP").keydown((k)=>{
-        key = window.event.keyCode
-        if(key==8){document.querySelector("#inputWPP").value=""}
-        $("#inputWPP").attr("maxlength", "14")
-        icval = $("#inputWPP").val()
-        var v = icval
-        if(v.length == 0){
-            document.querySelector("#inputWPP").value += "("
-        }else if(v.length == 3){
-            document.querySelector("#inputWPP").value += ")"
-        }
-        else if(v.length == 9){
-            document.querySelector("#inputWPP").value += "-"
-        }
-    })
-
-    //Formatar o CPF no Editar
-    $("#editarCPF").keydown((k)=>{
-        key = window.event.keyCode
-        if(key==8){document.querySelector("#editarCPF").value=""}
-        $("#editarCPF").attr("maxlength", "14")
-        icval = $("#editarCPF").val()
-        var v = icval
-        if(v.length == 3 || v.length == 7){
-            document.querySelector("#editarCPF").value += "."
-        }else if(v.length == 11){
-            document.querySelector("#editarCPF").value += "-"
-        }
-    })
-    //Formatar o WPP no Editar
-    $("#editarWPP").keydown((k)=>{
-        key = window.event.keyCode
-        if(key==8){document.querySelector("#editarWPP").value=""}
-        $("#editarWPP").attr("maxlength", "14")
-        icval = $("#editarWPP").val()
-        var v = icval
-        if(v.length == 0){
-            document.querySelector("#editarWPP").value += "("
-        }else if(v.length == 3){
-            document.querySelector("#editarWPP").value += ")"
-        }
-        else if(v.length == 9){
-            document.querySelector("#editarWPP").value += "-"
-        }
-    })
+    
+    format()
 
     //Alertas
     setTimeout(()=>{ //Fecha automaticamente após 5 segundos
@@ -158,77 +104,21 @@ $(document).ready(()=>{
     })
 
 
-    //Imprimir os checkbox com os sintomas
-    listaSintomas = [
-        "Febre",
-        "Coriza",
-        "Nariz entupido",
-        "Cansaço",
-        "Tosse",
-        "Dor de cabeça",
-        "Dores no corpo",
-        "Mal estar geral",
-        "Dor de garganta",
-        "Dificuldade de respirar",
-        "Falta de paladar",
-        "Falta de olfato",
-        "Dificuldade de locomoção",
-        "Diarréia"
-    ]
-    resultados = [
-        "<b style='color:red'>❗POSSÍVEL INFECTADO</b>",
-        "<b style='color:orange'>⚠️POTENCIAL INFECTADO</b>",
-        "<b style='color:green'>✅SINTOMAS INSUFICIENTES</b>",
-        "<b style='color:grey'>Não Atendido</b>"
-    ]
-    let somaSintomas = 0
-    sintomasPaciente = []
-    divSintomas = $("#sintomas")
-    listaSintomas.forEach(element => {
-        let formCheck = $('<div/>',{
-            class: 'form-check'
-        }).appendTo(divSintomas);
-        let formCheckInput = $('<input/>',{
-            class: 'form-check-input',
-            type: 'checkbox',
-            value: 1
-        }).appendTo(formCheck)
-        let formCheckLabel = $('<label/>',{
-            class: 'form-check-label',
-            text: element
-        }).appendTo(formCheck)
-
-        formCheckInput.click(()=>{
-            if(formCheckInput.prop("checked")){
-                somaSintomas+=1
-                sintomasPaciente.push(element)
-            }else{
-                somaSintomas-=1
-                sintomasPaciente.splice(sintomasPaciente.indexOf(element),1)
-            }
-            if(somaSintomas>=9){
-                rr = 0
-            }else if(somaSintomas>=6 && somaSintomas<9){
-                rr = 1
-            }else if(somaSintomas<6){
-                rr = 2
-            }
-            resultadoFinal = resultados[rr]
-            $("#resultadoSintomas").html("Resultado: "+resultadoFinal)
-            $("#areaSintomas").html(sintomasPaciente+",")
-            $("#sintNum").val(somaSintomas)
-            $("#resultNum").val(rr)
-        })
-    });
+    diagnosis()
 
     $("#salvarPaciente").submit(async(e)=>{
         e.preventDefault()
-        const formPatient = new FormData(document.getElementById("salvarPaciente"))
-        const savePatient = await api.post('/painel/pacientes', formPatient)
-        const patient = savePatient.data
-
-        renderPatients()
-        document.getElementById("nome").value = document.getElementById("inputCPF").value = document.getElementById("inputWPP").value = document.getElementById("inputDate").value = document.getElementById("formFile").value = ""
+        if(CPF(document.getElementById("inputCPF").value)==true){
+            if(confirm("Completar cadastro?")==true){
+                const formPatient = new FormData(document.getElementById("salvarPaciente"))
+                const savePatient = await api.post('/painel/pacientes', formPatient)
+                const patient = savePatient.data
+                renderPatients()
+                document.getElementById("nome").value = document.getElementById("inputCPF").value = document.getElementById("inputWPP").value = document.getElementById("inputDate").value = document.getElementById("formFile").value = ""
+            }
+        }else{
+            alert("CPF INVÁLIDO!")
+        }
     }) 
 
     $("#editArea form").submit(async(e)=>{
