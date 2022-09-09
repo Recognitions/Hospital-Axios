@@ -20,6 +20,9 @@ Route::post('/painel/pacientes/editar', [Eventos::class, 'editar'])->name('pacie
 
 Route::get('/painel/tabela', [Eventos::class, 'tabela']);
 
+
+Route::get('/painel/pacientes/atenda/{id}', [Eventos::class, 'atenda']);
+
 Route::get('/painel/pacientes/atender/{id}', [Eventos::class, 'atender']);
 Route::post('/painel/pacientes/atender/{id}', [Eventos::class, 'concluir']);
 

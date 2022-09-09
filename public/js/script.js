@@ -2,6 +2,7 @@ import { format } from './format.js'
 import { CPF } from './validate.js'
 import { consult } from './consult.js'
 
+
 $(document).ready(()=>{
     const api = axios.create({
         baseURL: "http://127.0.0.1:8000"
@@ -144,6 +145,30 @@ $(document).ready(()=>{
                 id:"btndoalerta"
             }).appendTo(successa)
             $("#meuAlertae button").click(()=>{successa.hide()})
+            attend()
         }
     })
+
+    async function attend(){
+        var resultados = [
+            "<b style='color:red'>❗POSSÍVEL INFECTADO</b>",
+            "<b style='color:orange'>⚠️POTENCIAL INFECTADO</b>",
+            "<b style='color:green'>✅SINTOMAS INSUFICIENTES</b>",
+            "<b style='color:grey'>Não Atendido</b>"
+        ]
+        const url = (window.location.href).split("/")
+        let card = document.querySelector(".card")
+        const atendimento = await api.get(`/painel/pacientes/atenda/${url[6]}`)        
+        const date = 0
+        const horario = 0 
+        card.innerHTML=`
+            <img src="/img/pacientes/${atendimento.data.foto}" class="card-img-top">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">${atendimento.data.nome}</li>
+                <li class="list-group-item"><b>${resultados[atendimento.data.estado]}</b></li>
+                <li class="list-group-item"><b>Atentido em: ${date}</b></li>
+                <li class="list-group-item"><b>Horário: ${horario}</b></li>
+            </ul>
+        `
+    }
 });

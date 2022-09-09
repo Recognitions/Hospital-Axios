@@ -83,6 +83,10 @@ class Eventos extends Controller
         $event = Pacientes::findOrFail($id);
         return view('atender',["event" => $event]);
     }
+    public function atenda($id){
+        $event = Pacientes::findOrFail($id);
+        return response()->json($event);
+    }
     public function concluir(Request $r){
         $event = new Atendimentos;
         $event->sintomas = $r->sintomas;
