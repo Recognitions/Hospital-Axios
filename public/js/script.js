@@ -3,35 +3,28 @@ import { CPF } from './validate.js'
 import { consult } from './consult.js'
 
 $(document).ready(()=>{
-
     const api = axios.create({
         baseURL: "http://127.0.0.1:8000"
     })
-
     async function renderPatients(){
         const table = document.querySelector("tbody")
         const patients = await api.get('/pacientes')
         table.innerHTML=""
         patients.data.forEach((patient)=>{
             const tr = document.createElement("tr")
-
             const ano = parseInt(patient.nasc.slice(0,4));
             const mes = parseInt(patient.nasc.slice(5,2));
             const dia = parseInt(patient.nasc.slice(8));
-
             const data = new Date()
             const anoAtual = data.getFullYear();
             const mesAtual = data.getMonth()+1;
             const diaAtual = data.getDate();
-
             const idade = anoAtual-ano;
-
             if(mesAtual<mes){
                 idade -= 1;
             }else if((mesAtual == mes) && (diaAtual <= dia)){
                 idade -= 1;
             }
-
             const resultados = [
                 "❗Possível Infectado",
                 "⚠️Potencial Infectado",
@@ -39,7 +32,6 @@ $(document).ready(()=>{
                 "Não Atendido"
             ];
             const corRR = ["red","orange","green","grey"];
-
             tr.innerHTML=`
                 <th><a href="/img/pacientes/${patient.foto}"><img style="background-image:url(/img/pacientes/${patient.foto})" class="imagemPaciente"></a></th>
                 <th id="nome${patient.id}" value="${patient.id}">${patient.nome}</th>
@@ -54,7 +46,6 @@ $(document).ready(()=>{
                 </th>
             `
             table.appendChild(tr)
-
             document.querySelector(`#E${patient.id}`).addEventListener("click",()=>{
                 const editArea = document.querySelector("#editArea")
                 editArea.style.display="flex"
@@ -75,10 +66,7 @@ $(document).ready(()=>{
                 }
             })
         })
-
     }
-    
-
     //Data maxima no input date
     if(document.getElementById("inputDate")){
         renderPatients()
@@ -94,9 +82,7 @@ $(document).ready(()=>{
         }
         inputDate.max=(date.getFullYear()-1)+"-"+mes+"-"+date.getDate();
     }
-
     consult()
-
     //Alertas
     setTimeout(()=>{ //Fecha automaticamente após 5 segundos
         $("#meuAlerta").hide();
@@ -104,10 +90,6 @@ $(document).ready(()=>{
     $("#meuAlerta button").click(()=>{ //Cliar no botão para fechar
         $("#meuAlerta").hide();
     })
-
-
-    
-
     $("#salvarPaciente").submit(async(e)=>{
         e.preventDefault()
         if(CPF(document.getElementById("inputCPF").value)==true){
@@ -122,7 +104,6 @@ $(document).ready(()=>{
             alert("CPF INVÁLIDO!")
         }
     })
-
     $("#editArea form").submit(async(e)=>{
         e.preventDefault()
         if(CPF(document.getElementById("editarCPF").value)==true){
@@ -136,7 +117,6 @@ $(document).ready(()=>{
             alert("CPF INVÁLIDO!")
         }
     })
-    
     $("#atenderPaciente").submit(async(e)=>{
         e.preventDefault()
         if(confirm("Realizar atendimento?")==true){
@@ -160,5 +140,4 @@ $(document).ready(()=>{
             $("#meuAlertae button").click(()=>{successa.hide()})
         }
     })
-
 });
