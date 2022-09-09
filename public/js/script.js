@@ -68,7 +68,6 @@ $(document).ready(()=>{
             })
         })
     }
-    //Data maxima no input date
     if(document.getElementById("inputDate")){
         renderPatients()
         format()
@@ -83,12 +82,13 @@ $(document).ready(()=>{
         }
         inputDate.max=(date.getFullYear()-1)+"-"+mes+"-"+date.getDate();
     }
+    
     consult()
-    //Alertas
-    setTimeout(()=>{ //Fecha automaticamente após 5 segundos
+
+    setTimeout(()=>{
         $("#meuAlerta").hide();
     },5000)
-    $("#meuAlerta button").click(()=>{ //Cliar no botão para fechar
+    $("#meuAlerta button").click(()=>{
         $("#meuAlerta").hide();
     })
     $("#salvarPaciente").submit(async(e)=>{
