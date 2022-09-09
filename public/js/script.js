@@ -10,6 +10,7 @@ $(document).ready(()=>{
         const table = document.querySelector("tbody")
         const patients = await api.get('/pacientes')
         table.innerHTML=""
+        patients.data.sort((a,b) => b.id - a.id);
         patients.data.forEach((patient)=>{
             const tr = document.createElement("tr")
             const ano = parseInt(patient.nasc.slice(0,4));
@@ -66,6 +67,12 @@ $(document).ready(()=>{
                 }
             })
         })
+        setTimeout(()=>{
+            document.querySelector("tbody tr:first-child").classList.add("firstTr")
+            setTimeout(()=>{
+            document.querySelector("tbody tr:first-child").classList.remove("firstTr")
+            },300)
+        },100)
     }
     //Data maxima no input date
     if(document.getElementById("inputDate")){

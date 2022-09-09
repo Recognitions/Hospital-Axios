@@ -18,10 +18,10 @@
                     <i style="margin-left:3px;">Nome Completo</i>
                     <input type="text" placeholder="" name="nome" id="nome" class="form-control" required>
                     <i style="margin-left:3px;">CPF</i>
-                    <input type="text" placeholder="000.000.000-00" class="form-control" name="cpf" id="inputCPF" pattern="[0-9.-]+$" required>
+                    <input type="text" maxlength="14" placeholder="000.000.000-00" class="form-control" name="cpf" id="inputCPF" pattern="[0-9.-]+$" required>
                     <div>
                         <i style="margin-left:3px;">Contato</i>
-                        <input type="text" placeholder="(00)90000-0000" name="wpp" class="form-control" id="inputWPP" pattern="[0-9-()]+$" required>
+                        <input type="text" maxlength="14" placeholder="(00)90000-0000" name="wpp" class="form-control" id="inputWPP" pattern="[0-9-()]+$" required>
                     </div>
                     <i style="margin-left:3px;">Data de Nascimento</i>
                     <input type="date" class="form-control" name="nasc" id="inputDate" required>
@@ -68,10 +68,10 @@
                             <i style="margin-left:3px;" >Nome Completo</i>
                             <input type="text" placeholder="" name="nome" id="editarNome" class="form-control" required="">
                             <i style="margin-left:3px;">CPF</i>
-                            <input type="text" placeholder="000.000.000-00" class="form-control" name="cpf" id="editarCPF" pattern="[0-9.-]+$" required="">
+                            <input type="text" maxlength="14" placeholder="000.000.000-00" class="form-control" name="cpf" id="editarCPF" pattern="[0-9.-]+$" required="">
                             <div>
                                 <i style="margin-left:3px;">Contato</i>
-                                <input type="text" placeholder="(00)90000-0000" name="wpp" class="form-control" id="editarWPP" pattern="[0-9-()]+$" required="">
+                                <input type="text" maxlength="14" placeholder="(00)90000-0000" name="wpp" class="form-control" id="editarWPP" pattern="[0-9-()]+$" required="">
                             </div>
                             <i style="margin-left:3px;">Data de Nascimento</i>
                             <input type="date" class="form-control" name="nasc" id="editarIdade" required="" min="1900-01-01" max="2021-07-13">
