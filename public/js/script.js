@@ -67,12 +67,6 @@ $(document).ready(()=>{
                 }
             })
         })
-        setTimeout(()=>{
-            document.querySelector("tbody tr:first-child").classList.add("firstTr")
-            setTimeout(()=>{
-            document.querySelector("tbody tr:first-child").classList.remove("firstTr")
-            },300)
-        },100)
     }
     //Data maxima no input date
     if(document.getElementById("inputDate")){
@@ -106,6 +100,12 @@ $(document).ready(()=>{
                 const patient = savePatient.data
                 renderPatients()
                 document.getElementById("nome").value = document.getElementById("inputCPF").value = document.getElementById("inputWPP").value = document.getElementById("inputDate").value = document.getElementById("formFile").value = ""
+                setTimeout(()=>{
+                    document.querySelector("tbody tr:first-child").classList.add("firstTr")
+                    setTimeout(()=>{
+                    document.querySelector("tbody tr:first-child").classList.remove("firstTr")
+                    },300)
+                },100)
             }
         }else{
             alert("CPF INVÁLIDO!")
