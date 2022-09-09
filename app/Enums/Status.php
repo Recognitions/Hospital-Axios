@@ -4,22 +4,32 @@ namespace App\Enums;
 
 enum Status: int
 {
-    case Available = 1;
-    case Occupied = 2;
+    case PossibleInfected = 0;
+    case InfectedPotential = 1;
+    case InsufficientSymptoms = 2;
+    case NotMet = 3;
 
     public function getLabel()
     {
         return match(this)
         {
-            Status::Available => [
+            Status::PossibleInfected => [
                 'color' => 'sucess',
-                'name' => 'Disponível',
+                'name' => 'POSSÍVEL INFECTADO',
             ],
-
-            Status::Occupied => [
+            Status::InfectedPotential => [
                 'color' => 'warning',
-                'name' => 'Ocupado'
-            ]
+                'name' => 'POTENCIAL INFECTADO'
+            ],
+            Status::InsufficientSymptoms => [
+                'color' => 'warning',
+                'name' => 'SINTOMAS INSUFICIENTES'
+            ],
+            Status::NotMet => [
+                'color' => 'grey',
+                'name' => 'Não Atendido'
+            ],
+            
         };
     }
 }
