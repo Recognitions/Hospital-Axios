@@ -88,7 +88,10 @@ $(document).ready(()=>{
 
     $("#salvarPaciente").submit(async(e)=>{
         e.preventDefault()
-        if(CPF(document.getElementById("inputCPF").value)==true){
+        const zap = document.getElementById("inputWPP").value
+        const ddd = zap.substr(1,2)
+        const prefixo = zap.substr(4,1)
+        if((prefixo==9)&&(ddd>=11 && ddd<=99) && CPF(document.getElementById("inputCPF").value)==true){
             if(confirm("Completar cadastro?")==true){
                 const formPatient = new FormData(document.getElementById("salvarPaciente"))
                 const savePatient = await api.post('/painel/pacientes', formPatient)
@@ -103,12 +106,15 @@ $(document).ready(()=>{
                 },100)
             }
         }else{
-            alert("CPF INVÁLIDO!")
+            alert("PREENCHA OS CAMPOS CORRETAMENTE!")
         }
     })
     $("#editArea form").submit(async(e)=>{
         e.preventDefault()
-        if(CPF(document.getElementById("editarCPF").value)==true){
+        const zap = document.getElementById("editarWPP").value
+        const ddd = zap.substr(1,2)
+        const prefixo = zap.substr(4,1)
+        if((prefixo==9)&&(ddd>=11 && ddd<=99) && CPF(document.getElementById("editarCPF").value)==true){
             if(confirm("Confirmar edições?")==true){
                 const formEdit = new FormData(document.querySelector("#editArea form"))
                 const editPatient = await api.post("/painel/pacientes/editar",formEdit)
@@ -116,7 +122,7 @@ $(document).ready(()=>{
                 alert("Editado com sucesso!")
             }
         }else{
-            alert("CPF INVÁLIDO!")
+            alert("PREENCHA OS CAMPOS CORRETAMENTE!")
         }
     })
     $("#atenderPaciente").submit(async(e)=>{
