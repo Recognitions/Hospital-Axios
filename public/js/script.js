@@ -157,10 +157,8 @@ $(document).ready(()=>{
         const mes = (atendimento.data.updated_at).substr(5,2)
         const dia = (atendimento.data.updated_at).substr(8,2)
         const date = dia+"/"+mes+"/"+ano
-
         const hora = (atendimento.data.updated_at).substr(11,2)-3
         const horario = hora+""+(atendimento.data.updated_at).substr(13,3)
-        
         card.innerHTML=`
             <img src="/img/pacientes/${atendimento.data.foto}" class="card-img-top">
             <ul class="list-group list-group-flush">
