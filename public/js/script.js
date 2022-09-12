@@ -132,6 +132,7 @@ $(document).ready(()=>{
             const formAtten = new FormData(document.getElementById("atenderPaciente"))
             const atten = await api.post(`/painel/pacientes/atender/${url[6]}`,formAtten)
             const br = $("#boxResultado")
+            br.html('')
             const successa = $("<div/>",{
                 class: "alert alert-success alert-dismissible fade show",
                 role: "alert",
@@ -164,7 +165,7 @@ $(document).ready(()=>{
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">${atendimento.data.nome}</li>
                 <li class="list-group-item"><b>${resultados[atendimento.data.estado]}</b></li>
-                <li class="list-group-item"><b>Atentido em: ${date}</b></li>
+                <li class="list-group-item"><b>Atualizado em: ${date}</b></li>
                 <li class="list-group-item"><b>Horário: ${horario}</b></li>
             </ul>
         `
