@@ -86,12 +86,6 @@ $(document).ready(()=>{
     
     consult()
 
-    setTimeout(()=>{
-        $("#meuAlerta").hide();
-    },5000)
-    $("#meuAlerta button").click(()=>{
-        $("#meuAlerta").hide();
-    })
     $("#salvarPaciente").submit(async(e)=>{
         e.preventDefault()
         if(CPF(document.getElementById("inputCPF").value)==true){
