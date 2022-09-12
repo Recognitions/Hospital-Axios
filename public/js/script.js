@@ -7,6 +7,12 @@ $(document).ready(()=>{
     const api = axios.create({
         baseURL: "http://127.0.0.1:8000"
     })
+    var resultados = [
+        "<b style='color:red'>POSSÍVEL INFECTADO</b>",
+        "<b style='color:orange'>POTENCIAL INFECTADO</b>",
+        "<b style='color:green'>SINTOMAS INSUFICIENTES</b>",
+        "<b style='color:grey'>NÃO ATENDIDO</b>"
+    ];
     async function renderPatients(){
         const table = document.querySelector("tbody")
         const patients = await api.get('/pacientes')
@@ -27,12 +33,7 @@ $(document).ready(()=>{
             }else if((mesAtual == mes) && (diaAtual <= dia)){
                 idade -= 1;
             }
-            const resultados = [
-                "<b style='color:red'>POSSÍVEL INFECTADO</b>",
-                "<b style='color:orange'>POTENCIAL INFECTADO</b>",
-                "<b style='color:green'>SINTOMAS INSUFICIENTES</b>",
-                "<b style='color:grey'>NÃO ATENDIDO</b>"
-            ];
+            
             tr.innerHTML=`
                 <th><a href="/img/pacientes/${patient.foto}"><img style="background-image:url(/img/pacientes/${patient.foto})" class="imagemPaciente"></a></th>
                 <th id="nome${patient.id}" value="${patient.id}">${patient.nome}</th>
@@ -149,12 +150,6 @@ $(document).ready(()=>{
     })
 
     async function attend(){
-        var resultados = [
-            "<b style='color:red'>POSSÍVEL INFECTADO</b>",
-            "<b style='color:orange'>POTENCIAL INFECTADO</b>",
-            "<b style='color:green'>SINTOMAS INSUFICIENTES</b>",
-            "<b style='color:grey'>NÃO ATENDIDO</b>"
-        ]
         const url = (window.location.href).split("/")
         let card = document.querySelector(".card")
         const atendimento = await api.get(`/painel/pacientes/atenda/${url[6]}`)

@@ -16,10 +16,10 @@ export function consult(){
         "Diarréia"
     ]
     const resultados = [
-        "<b style='color:red'>❗POSSÍVEL INFECTADO</b>",
-        "<b style='color:orange'>⚠️POTENCIAL INFECTADO</b>",
-        "<b style='color:green'>✅SINTOMAS INSUFICIENTES</b>",
-        "<b style='color:grey'>Não Atendido</b>"
+        "<b style='color:red'>POSSÍVEL INFECTADO</b>",
+        "<b style='color:orange'>POTENCIAL INFECTADO</b>",
+        "<b style='color:green'>SINTOMAS INSUFICIENTES</b>",
+        "<b style='color:grey'>NÃO ATENDIDO</b>"
     ]
     let somaSintomas = 0
     let sintomasPaciente = []
