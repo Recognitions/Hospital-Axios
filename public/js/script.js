@@ -171,5 +171,5 @@ $(document).ready(()=>{
             </ul>
         `
     }
-    attend()
+    if(((window.location.href).split("/")).length>6){attend()}
 });
