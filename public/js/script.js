@@ -158,9 +158,15 @@ $(document).ready(()=>{
         ]
         const url = (window.location.href).split("/")
         let card = document.querySelector(".card")
-        const atendimento = await api.get(`/painel/pacientes/atenda/${url[6]}`)        
-        const date = 0
-        const horario = 0 
+        const atendimento = await api.get(`/painel/pacientes/atenda/${url[6]}`)
+        const ano = (atendimento.data.updated_at).substr(0,4)
+        const mes = (atendimento.data.updated_at).substr(5,2)
+        const dia = (atendimento.data.updated_at).substr(8,2)
+        const date = dia+"/"+mes+"/"+ano
+
+        const hora = (atendimento.data.updated_at).substr(11,2)-3
+        const horario = hora+""+(atendimento.data.updated_at).substr(13,3)
+        
         card.innerHTML=`
             <img src="/img/pacientes/${atendimento.data.foto}" class="card-img-top">
             <ul class="list-group list-group-flush">
@@ -171,4 +177,5 @@ $(document).ready(()=>{
             </ul>
         `
     }
+    attend()
 });

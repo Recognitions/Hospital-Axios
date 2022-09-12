@@ -30,28 +30,7 @@
         <div class="card" style="width: 18rem;">
             <img src="/img/pacientes/{{ $event->foto }}" class="card-img-top">
             <ul class="list-group list-group-flush">
-                @php 
-                $resultados = [
-                    "❗Possível Infectado",
-                    "⚠️Potencial Infectado",
-                    "✅Sintomas Insuficientes",
-                    "Não Atendido"
-                ];
-                $corRR = ["red","orange","green","grey"];
-
-                $recent = $event->updated_at;
-                $ano = substr($recent,0,4);
-                $mes = substr($recent,5,2);
-                $dia = substr($recent,8,2);
-                $date = $dia."/".$mes."/".$ano;
-
-                $hora = substr($recent,11,2)-3;
-                $horario = $hora.substr($recent,13,3);
-                @endphp
-                <li class="list-group-item">{{ $event->nome }}</li>
-                <li class="list-group-item" style="color:{{$corRR[$event->estado]}}"><b>{{ $resultados[$event->estado] }}</b></li>
-                <li class="list-group-item"><b>Atentido em: {{$date}}</b></li>
-                <li class="list-group-item"><b>Horário: {{$horario}}</b></li>
+                
             </ul>
         </div>
 
