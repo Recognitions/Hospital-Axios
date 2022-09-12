@@ -4,9 +4,9 @@
 @section('content')
     <header class="d-flex justify-content-center py-3 shadow">
         <ul class="nav nav-pills">
-            <il class="nav-item"><a class="nav-link" href="/painel">Painel</a></il>
-            <il class="nav-item"><a class="nav-link active">Pacientes</a></il>
-            <il class="nav-item"><a class="nav-link">Atendimentos</a></il>
+            <li class="nav-item"><a class="nav-link" href="/painel">Painel</a></li>
+            <li class="nav-item"><a class="nav-link active">Pacientes</a></li>
+            <li class="nav-item"><a class="nav-link">Atendimentos</a></li>
         </ul>
     </header>
     <div class="pacientes"><br>

@@ -28,19 +28,18 @@ $(document).ready(()=>{
                 idade -= 1;
             }
             const resultados = [
-                "❗Possível Infectado",
-                "⚠️Potencial Infectado",
-                "✅Sintomas Insuficientes",
-                "Não Atendido"
+                "<b style='color:red'>POSSÍVEL INFECTADO</b>",
+                "<b style='color:orange'>POTENCIAL INFECTADO</b>",
+                "<b style='color:green'>SINTOMAS INSUFICIENTES</b>",
+                "<b style='color:grey'>NÃO ATENDIDO</b>"
             ];
-            const corRR = ["red","orange","green","grey"];
             tr.innerHTML=`
                 <th><a href="/img/pacientes/${patient.foto}"><img style="background-image:url(/img/pacientes/${patient.foto})" class="imagemPaciente"></a></th>
                 <th id="nome${patient.id}" value="${patient.id}">${patient.nome}</th>
                 <th id="idade${patient.id}" value="{{$paciente->nasc}}">${idade}</th>
                 <th id="cpf${patient.id}">${patient.cpf}</th>
                 <th id="wpp${patient.id}">${patient.wpp}</th>
-                <th style="text-align:center;color:${corRR[patient.estado]}">${resultados[patient.estado]}</th>
+                <th style="text-align:center;">${resultados[patient.estado]}</th>
                 <th>
                     <a href="/painel/pacientes/atender/${patient.id}"><button type="submit" class="btn btn-success w-100" name="atender">Atender</button></a>
                     <a id="edit${patient.id}"><button id="E${patient.id}" type="submit" class="btn btn-warning w-100" name="atender">Editar</button></a>
@@ -151,10 +150,10 @@ $(document).ready(()=>{
 
     async function attend(){
         var resultados = [
-            "<b style='color:red'>❗POSSÍVEL INFECTADO</b>",
-            "<b style='color:orange'>⚠️POTENCIAL INFECTADO</b>",
-            "<b style='color:green'>✅SINTOMAS INSUFICIENTES</b>",
-            "<b style='color:grey'>Não Atendido</b>"
+            "<b style='color:red'>POSSÍVEL INFECTADO</b>",
+            "<b style='color:orange'>POTENCIAL INFECTADO</b>",
+            "<b style='color:green'>SINTOMAS INSUFICIENTES</b>",
+            "<b style='color:grey'>NÃO ATENDIDO</b>"
         ]
         const url = (window.location.href).split("/")
         let card = document.querySelector(".card")
